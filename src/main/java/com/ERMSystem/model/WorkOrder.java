@@ -1,6 +1,6 @@
 package com.ERMSystem.model;
 
-import java.io.Serializable;
+//import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,11 +12,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "workorder")
-public class WorkOrder implements Serializable {
+public class WorkOrder  { //Serializable removed. If problem occur add that interface
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+
+	private String woNumber;
 
 	@OneToOne(optional = false, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private Customer customer;
@@ -27,6 +29,13 @@ public class WorkOrder implements Serializable {
 	public WorkOrder() {
 
 	}
+	
+	public WorkOrder(String woNumber, Customer customer, Product product) {
+		super();
+		this.woNumber = woNumber;
+		this.customer = customer;
+		this.product = product;
+	}
 
 	public long getId() {
 		return id;
@@ -36,10 +45,12 @@ public class WorkOrder implements Serializable {
 		this.id = id;
 	}
 
-	public WorkOrder(Customer customer, Product product) {
-		super();
-		this.customer = customer;
-		this.product = product;
+	public String getWoNumber() {
+		return woNumber;
+	}
+
+	public void setWoNumber(String woNumber) {
+		this.woNumber = woNumber;
 	}
 
 	public Customer getCustomer() {

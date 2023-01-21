@@ -52,11 +52,10 @@ public class  WorkOrderController {
 			Customer customer = wo.getCustomer();
 			Product product = wo.getProduct();
 			
-			WorkOrderObject woObj=new WorkOrderObject(wo.getId(), product.getProductName(), 
-					product.getSerialNumber(),product.getSaleDate(), customer.getNic(), customer.getCname(), 
+			WorkOrderObject woObj=new WorkOrderObject(wo.getId(), wo.getWoNumber(), product.getProductName(), 
+					product.getSerialNumber(),product.getSaleDate(), product.getWarrentyStatus(), customer.getNic(), customer.getCname(), 
 					customer.getAddress(), customer.getEmail(),customer.getPhone());
 			woObject.add(woObj);
-			
 		}
 		return woObject;
 	}
@@ -66,12 +65,12 @@ public class  WorkOrderController {
 	@PostMapping("/workorders")
 	public WorkOrderObject createWorkOrder(@RequestBody WorkOrderObject woObj) {
 		Customer customer = new Customer(woObj.getNic(), woObj.getCname(), woObj.getAddress(), woObj.getEmail(), woObj.getPhone());
-		Product product = new Product(woObj.getProductName(), woObj.getSerialNumber(), woObj.getSaleDate());
+		Product product = new Product(woObj.getProductName(), woObj.getSerialNumber(), woObj.getSaleDate(), woObj.getWarrentyStatus());
 		
 		customerRepository.save(customer);
 		productRepository.save(product);
 		
-		WorkOrder wo = new WorkOrder(customer, product);
+		WorkOrder wo = new WorkOrder(woObj.getWoNumber(), customer, product);
 		workorderRepository.save(wo);
 		woObj.setId(wo.getId());
 		return woObj;
@@ -88,8 +87,8 @@ public class  WorkOrderController {
 		Customer customer = wo.getCustomer();
 		Product product = wo.getProduct();
 		
-		WorkOrderObject woObj=new WorkOrderObject(wo.getId(), product.getProductName(), 
-				product.getSerialNumber(),product.getSaleDate(), customer.getNic(), customer.getCname(), 
+		WorkOrderObject woObj=new WorkOrderObject(wo.getId(), wo.getWoNumber(), product.getProductName(), 
+				product.getSerialNumber(),product.getSaleDate(), product.getWarrentyStatus(), customer.getNic(), customer.getCname(), 
 				customer.getAddress(), customer.getEmail(),customer.getPhone());
 
 		return ResponseEntity.ok(woObj);
@@ -115,6 +114,7 @@ public class  WorkOrderController {
 		product.setProductName(woObj.getProductName());
 		product.setSerialNumber(woObj.getSerialNumber());
 		product.setSaleDate(woObj.getSaleDate());
+		product.setWarrentyStatus(woObj.getWarrentyStatus());
 		
 		customerRepository.save(customer);
 		productRepository.save(product);

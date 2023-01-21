@@ -16,18 +16,18 @@ public class Product {
 	private String productName;
 	private String serialNumber;
 	private String saleDate;
-//	private String warrentyStatus;
+	private String warrentyStatus;
 
 	public Product() {
 
 	}
 
-	public Product(String productName, String serialNumber, String saleDate) {
+	public Product(String productName, String serialNumber, String saleDate, String warrentyStatus) {
 		super();
 		this.productName = productName;
 		this.serialNumber = serialNumber;
 		this.saleDate = saleDate;
-//		this.warrentyStatus = warrentyStatus;
+		this.warrentyStatus = warrentyStatus;
 	}
 
 	public String getProductName() {
@@ -54,12 +54,12 @@ public class Product {
 		this.saleDate = saleDate;
 	}
 
-//	public String getWarrentyStatus() {
-//		return warrentyStatus;
-//	}
-//
-//	public void setWarrentyStatus(String warrentyStatus) {
-//		this.warrentyStatus = warrentyStatus;
-//	}
+	public String getWarrentyStatus() {
+		return warrentyStatus;
+	}
+
+	public void setWarrentyStatus(String warrentyStatus) {
+		this.warrentyStatus = warrentyStatus;
+	}
 
 }

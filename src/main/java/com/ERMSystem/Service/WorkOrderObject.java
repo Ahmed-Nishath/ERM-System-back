@@ -1,33 +1,30 @@
 package com.ERMSystem.Service;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 public class WorkOrderObject {
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-//	private String woNumber;
+	private String woNumber;
 	private String productName;
 	private String serialNumber;
 	private String saleDate;
-//	private String warrentyStatus;
+	private String warrentyStatus;
 	private String nic;
 	private String cname;
 	private String address;
 	private String email;
 	private String phone;
 
-	public WorkOrderObject(long id, String productName, String serialNumber, String saleDate,
+	public WorkOrderObject(long id, String woNumber, String productName, String serialNumber, String saleDate, String warrentyStatus,
 			String nic, String cname, String address, String email, String phone) {
 		super();
 		this.id = id;
-//		this.woNumber = woNumber;
+		this.woNumber = woNumber;
 		this.productName = productName;
 		this.serialNumber = serialNumber;
 		this.saleDate = saleDate;
-//		this.warrentyStatus = warrentyStatus;
+		this.warrentyStatus = warrentyStatus;
 		this.nic = nic;
 		this.cname = cname;
 		this.address = address;
@@ -43,13 +40,13 @@ public class WorkOrderObject {
 		this.id = id;
 	}
 
-//	public String getWoNumber() {
-//		return woNumber;
-//	}
-//
-//	public void setWoNumber(String woNumber) {
-//		this.woNumber = woNumber;
-//	}
+	public String getWoNumber() {
+		return woNumber;
+	}
+
+	public void setWoNumber(String woNumber) {
+		this.woNumber = woNumber;
+	}
 
 	public String getProductName() {
 		return productName;
@@ -75,13 +72,13 @@ public class WorkOrderObject {
 		this.saleDate = saleDate;
 	}
 
-//	public String getWarrentyStatus() {
-//		return warrentyStatus;
-//	}
-//
-//	public void setWarrentyStatus(String warrentyStatus) {
-//		this.warrentyStatus = warrentyStatus;
-//	}
+	public String getWarrentyStatus() {
+		return warrentyStatus;
+	}
+
+	public void setWarrentyStatus(String warrentyStatus) {
+		this.warrentyStatus = warrentyStatus;
+	}
 
 	public String getNic() {
 		return nic;
