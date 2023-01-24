@@ -53,7 +53,7 @@ public class  WorkOrderController {
 			Product product = wo.getProduct();
 			
 			WorkOrderObject woObj=new WorkOrderObject(wo.getId(), wo.getWoNumber(), product.getProductName(), 
-					product.getSerialNumber(),product.getSaleDate(), product.getWarrentyStatus(), customer.getNic(), customer.getCname(), 
+					product.getSerialNumber(),product.getSaleDate(), product.getWarrentyStatus(), wo.getAssignTo(), customer.getNic(), customer.getCname(), 
 					customer.getAddress(), customer.getEmail(),customer.getPhone());
 			woObject.add(woObj);
 		}
@@ -70,7 +70,7 @@ public class  WorkOrderController {
 		customerRepository.save(customer);
 		productRepository.save(product);
 		
-		WorkOrder wo = new WorkOrder(woObj.getWoNumber(), customer, product);
+		WorkOrder wo = new WorkOrder(woObj.getWoNumber(), woObj.getAssignTo(), customer, product);
 		workorderRepository.save(wo);
 		woObj.setId(wo.getId());
 		return woObj;
@@ -88,7 +88,7 @@ public class  WorkOrderController {
 		Product product = wo.getProduct();
 		
 		WorkOrderObject woObj=new WorkOrderObject(wo.getId(), wo.getWoNumber(), product.getProductName(), 
-				product.getSerialNumber(),product.getSaleDate(), product.getWarrentyStatus(), customer.getNic(), customer.getCname(), 
+				product.getSerialNumber(),product.getSaleDate(), product.getWarrentyStatus(), wo.getAssignTo(), customer.getNic(), customer.getCname(), 
 				customer.getAddress(), customer.getEmail(),customer.getPhone());
 
 		return ResponseEntity.ok(woObj);
@@ -101,6 +101,8 @@ public class  WorkOrderController {
 		
 		WorkOrder wo = workorderRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Work Order not found with id : " + id)) ;
+		
+		wo.setAssignTo(woObj.getAssignTo());
 		
 		Customer customer = wo.getCustomer();
 		Product product = wo.getProduct();

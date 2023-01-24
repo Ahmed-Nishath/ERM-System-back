@@ -19,6 +19,8 @@ public class WorkOrder  { //Serializable removed. If problem occur add that inte
 	private long id;
 
 	private String woNumber;
+	
+	private String assignTo;
 
 	@OneToOne(optional = false, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private Customer customer;
@@ -30,9 +32,10 @@ public class WorkOrder  { //Serializable removed. If problem occur add that inte
 
 	}
 	
-	public WorkOrder(String woNumber, Customer customer, Product product) {
+	public WorkOrder(String woNumber, String assignTo, Customer customer, Product product) {
 		super();
 		this.woNumber = woNumber;
+		this.assignTo = assignTo;
 		this.customer = customer;
 		this.product = product;
 	}
@@ -51,6 +54,14 @@ public class WorkOrder  { //Serializable removed. If problem occur add that inte
 
 	public void setWoNumber(String woNumber) {
 		this.woNumber = woNumber;
+	}
+	
+	public String getAssignTo() {
+		return assignTo;
+	}
+
+	public void setAssignTo(String assignTo) {
+		this.assignTo = assignTo;
 	}
 
 	public Customer getCustomer() {

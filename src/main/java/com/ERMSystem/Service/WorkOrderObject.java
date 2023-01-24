@@ -1,5 +1,7 @@
 package com.ERMSystem.Service;
 
+import java.sql.Date;
+
 import javax.persistence.Id;
 
 public class WorkOrderObject {
@@ -8,16 +10,18 @@ public class WorkOrderObject {
 	private String woNumber;
 	private String productName;
 	private String serialNumber;
-	private String saleDate;
+	private Date saleDate;
 	private String warrentyStatus;
+	private String assignTo;
+	
 	private String nic;
 	private String cname;
 	private String address;
 	private String email;
 	private String phone;
 
-	public WorkOrderObject(long id, String woNumber, String productName, String serialNumber, String saleDate, String warrentyStatus,
-			String nic, String cname, String address, String email, String phone) {
+	public WorkOrderObject(long id, String woNumber, String productName, String serialNumber, Date saleDate, String warrentyStatus,
+			String assignTo, String nic, String cname, String address, String email, String phone) {
 		super();
 		this.id = id;
 		this.woNumber = woNumber;
@@ -25,6 +29,7 @@ public class WorkOrderObject {
 		this.serialNumber = serialNumber;
 		this.saleDate = saleDate;
 		this.warrentyStatus = warrentyStatus;
+		this.assignTo = assignTo;
 		this.nic = nic;
 		this.cname = cname;
 		this.address = address;
@@ -64,11 +69,11 @@ public class WorkOrderObject {
 		this.serialNumber = serialNumber;
 	}
 
-	public String getSaleDate() {
+	public Date getSaleDate() {
 		return saleDate;
 	}
 
-	public void setSaleDate(String saleDate) {
+	public void setSaleDate(Date saleDate) {
 		this.saleDate = saleDate;
 	}
 
@@ -78,6 +83,14 @@ public class WorkOrderObject {
 
 	public void setWarrentyStatus(String warrentyStatus) {
 		this.warrentyStatus = warrentyStatus;
+	}
+
+	public String getAssignTo() {
+		return assignTo;
+	}
+
+	public void setAssignTo(String assignTo) {
+		this.assignTo = assignTo;
 	}
 
 	public String getNic() {

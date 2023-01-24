@@ -1,10 +1,15 @@
 package com.ERMSystem.model;
 
+import java.sql.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "product")
@@ -13,16 +18,19 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@DateTimeFormat(pattern = "mm-dd-yyyy")
+	@Column(name = "date")
+	private Date saleDate;
 	private String productName;
 	private String serialNumber;
-	private String saleDate;
 	private String warrentyStatus;
 
 	public Product() {
 
 	}
 
-	public Product(String productName, String serialNumber, String saleDate, String warrentyStatus) {
+	public Product(String productName, String serialNumber, Date saleDate, String warrentyStatus) {
 		super();
 		this.productName = productName;
 		this.serialNumber = serialNumber;
@@ -46,11 +54,11 @@ public class Product {
 		this.serialNumber = serialNumber;
 	}
 
-	public String getSaleDate() {
+	public Date getSaleDate() {
 		return saleDate;
 	}
 
-	public void setSaleDate(String saleDate) {
+	public void setSaleDate(Date saleDate) {
 		this.saleDate = saleDate;
 	}
 
