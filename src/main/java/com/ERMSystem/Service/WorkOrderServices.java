@@ -34,7 +34,7 @@ public class WorkOrderServices {
 			
 			WorkOrderObject woObj=new WorkOrderObject(wo.getId(), wo.getWoNumber(), product.getProductName(), 
 					product.getSerialNumber(),product.getSaleDate(), product.getWarrentyStatus(), wo.getAssignTo(), customer.getNic(), customer.getCname(), 
-					customer.getAddress(), customer.getEmail(),customer.getPhone());
+					customer.getAddress(), customer.getEmail(),customer.getPhone(), wo.getStatus(), wo.getCost(), wo.getEstimatedCompletionDate());
 			woObject.add(woObj);
 			
 		}

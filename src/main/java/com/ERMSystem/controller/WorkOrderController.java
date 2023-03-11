@@ -54,7 +54,7 @@ public class  WorkOrderController {
 			
 			WorkOrderObject woObj=new WorkOrderObject(wo.getId(), wo.getWoNumber(), product.getProductName(), 
 					product.getSerialNumber(),product.getSaleDate(), product.getWarrentyStatus(), wo.getAssignTo(), customer.getNic(), customer.getCname(), 
-					customer.getAddress(), customer.getEmail(),customer.getPhone());
+					customer.getAddress(), customer.getEmail(),customer.getPhone(), wo.getStatus(), wo.getCost(), wo.getEstimatedCompletionDate());
 			woObject.add(woObj);
 		}
 		return woObject;
@@ -70,7 +70,7 @@ public class  WorkOrderController {
 		customerRepository.save(customer);
 		productRepository.save(product);
 		
-		WorkOrder wo = new WorkOrder(woObj.getWoNumber(), woObj.getAssignTo(), customer, product);
+		WorkOrder wo = new WorkOrder(woObj.getWoNumber(), woObj.getAssignTo(), woObj.getStatus(), customer, product);
 		workorderRepository.save(wo);
 		woObj.setId(wo.getId());
 		return woObj;
@@ -87,13 +87,29 @@ public class  WorkOrderController {
 		Customer customer = wo.getCustomer();
 		Product product = wo.getProduct();
 		
-		WorkOrderObject woObj=new WorkOrderObject(wo.getId(), wo.getWoNumber(), product.getProductName(), 
-				product.getSerialNumber(),product.getSaleDate(), product.getWarrentyStatus(), wo.getAssignTo(), customer.getNic(), customer.getCname(), 
-				customer.getAddress(), customer.getEmail(),customer.getPhone());
+		WorkOrderObject woObj=new WorkOrderObject(wo.getId(), wo.getWoNumber(), product.getProductName(), product.getSerialNumber(),
+				product.getSaleDate(), product.getWarrentyStatus(), wo.getAssignTo(), customer.getNic(), customer.getCname(), 
+				customer.getAddress(), customer.getEmail(),customer.getPhone(), wo.getStatus(), wo.getCost(), wo.getEstimatedCompletionDate());
 
 		return ResponseEntity.ok(woObj);
 	}
 
+	//Get Work order by work order number
+	@GetMapping("/workorders/user/{woNumber}")
+	public ResponseEntity<WorkOrderObject> getWorkOrderByWoNumber(@PathVariable String  woNumber) {
+		
+		WorkOrder wo = workorderRepository.findByWoNumber(woNumber)
+				.orElseThrow(() -> new ResourceNotFoundException("Work Order not found with id : " + woNumber)) ;
+		
+		Customer customer = wo.getCustomer();
+		Product product = wo.getProduct();
+		
+		WorkOrderObject woObj=new WorkOrderObject(wo.getId(), wo.getWoNumber(), product.getProductName(), product.getSerialNumber(),
+				product.getSaleDate(), product.getWarrentyStatus(), wo.getAssignTo(), customer.getNic(), customer.getCname(), 
+				customer.getAddress(), customer.getEmail(),customer.getPhone(), wo.getStatus(), wo.getCost(), wo.getEstimatedCompletionDate());
+
+		return ResponseEntity.ok(woObj);
+	}
 	
 	//Update Work order
 	@PutMapping("/workorders/{id}")
@@ -103,6 +119,9 @@ public class  WorkOrderController {
 				.orElseThrow(() -> new ResourceNotFoundException("Work Order not found with id : " + id)) ;
 		
 		wo.setAssignTo(woObj.getAssignTo());
+		wo.setCost(woObj.getCost());
+		wo.setStatus(woObj.getStatus());
+		wo.setEstimatedCompletionDate(woObj.getEstimatedCompletionDate());
 		
 		Customer customer = wo.getCustomer();
 		Product product = wo.getProduct();
@@ -120,6 +139,7 @@ public class  WorkOrderController {
 		
 		customerRepository.save(customer);
 		productRepository.save(product);
+		workorderRepository.save(wo);
 		
 		return ResponseEntity.ok(woObj);
 	}
@@ -133,5 +153,67 @@ public class  WorkOrderController {
 		
 		workorderRepository.delete(wo);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
+	
+	//COMMENTS___________________________________________________________________________________________________________
+	
+	//Get Comment
+	@GetMapping("/workorders/comment/{id}")
+	public String getCommentById(@PathVariable Long id) {
+		
+		WorkOrder wo = workorderRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Work Order not found with id : " + id)) ;
+	
+		return wo.getComment();
+	}
+	
+	//Update Comment
+	@PutMapping("/workorders/comment/{id}")
+	public void updateComment(@PathVariable Long id, @RequestBody String comment){
+		
+		WorkOrder wo = workorderRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Work Order not found with id : " + id)) ;
+
+		comment = comment.replace("{\"comment\":\"", "");
+		comment = comment.replace("\"}", "");
+		comment = comment.replace(" GMT ", "");
+		if(wo.getComment() == null || wo.getComment().equals("")) wo.setComment(comment);
+		else wo.setComment(wo.getComment() + "*" + comment);
+
+		workorderRepository.save(wo);
+	}
+
+
+	//LISTS___________________________________________________________________________________________________________
+	
+	//Get all Customers
+	@GetMapping("/customers")
+	public List<Customer> getAllCustomers(){
+		
+		List<WorkOrder> workorder = workorderRepository.findAll();
+		
+		List<Customer> customers = new ArrayList<>();
+		
+		for(WorkOrder wo : workorder) {
+			Customer customer = wo.getCustomer();
+			customers.add(customer);
+		}
+		return customers;
+	}
+	
+	//Get all Products
+	@GetMapping("/products")
+	public List<Product> getAllProducts(){
+		
+		List<WorkOrder> workorder = workorderRepository.findAll();
+		
+		List<Product> products = new ArrayList<>();
+		
+		for(WorkOrder wo : workorder) {
+			Product product = wo.getProduct();
+			products.add(product);
+		}
+		return products;
 	}
 }

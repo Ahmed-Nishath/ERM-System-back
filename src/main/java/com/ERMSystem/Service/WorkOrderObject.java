@@ -8,11 +8,15 @@ public class WorkOrderObject {
 	@Id
 	private long id;
 	private String woNumber;
+	private String assignTo;
+	private String status;
+	private double cost;
+	private Date estimatedCompletionDate;
+	
 	private String productName;
 	private String serialNumber;
 	private Date saleDate;
 	private String warrentyStatus;
-	private String assignTo;
 	
 	private String nic;
 	private String cname;
@@ -20,8 +24,8 @@ public class WorkOrderObject {
 	private String email;
 	private String phone;
 
-	public WorkOrderObject(long id, String woNumber, String productName, String serialNumber, Date saleDate, String warrentyStatus,
-			String assignTo, String nic, String cname, String address, String email, String phone) {
+	public WorkOrderObject(long id, String woNumber, String productName, String serialNumber, Date saleDate, String warrentyStatus, 
+			String assignTo, String nic, String cname, String address, String email, String phone, String status, double cost, Date estimateDate) {
 		super();
 		this.id = id;
 		this.woNumber = woNumber;
@@ -35,6 +39,9 @@ public class WorkOrderObject {
 		this.address = address;
 		this.email = email;
 		this.phone = phone;
+		this.status = status;
+		this.cost = cost;
+		this.estimatedCompletionDate = estimateDate;
 	}
 
 	public long getId() {
@@ -131,5 +138,29 @@ public class WorkOrderObject {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String st) {
+		this.status = st;
+	}
+	
+	public double getCost() {
+		return this.cost;
+	}
+
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+	
+	public Date getEstimatedCompletionDate() {
+		return estimatedCompletionDate;
+	}
+
+	public void setEstimatedCompletionDate(Date estimateDate) {
+		this.estimatedCompletionDate = estimateDate;
 	}
 }
