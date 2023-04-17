@@ -10,7 +10,6 @@ import javax.persistence.Table;
 @Table(name = "customer") 
 public class Customer {
 	
-	//@Column(name = "nic", nullable = false, length = 10)
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;

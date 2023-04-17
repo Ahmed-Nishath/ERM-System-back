@@ -1,5 +1,5 @@
 package com.ERMSystem.model;
 
-public class Technician {
+public class Parts {
 
 }
